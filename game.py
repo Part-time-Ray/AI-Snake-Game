@@ -9,8 +9,9 @@ import pygame
 import sys
 import time
 class Snake:
-    def __init__(self, seed=0, size=12, screen_width=760, screen_height=820, margin=20, training_mode=False):
+    def __init__(self, seed=0, size=12, screen_width=760, screen_height=820, margin=20, training_mode=False, barrier_mode=True):
         self.training_mode = training_mode
+        self.barrier_mode = barrier_mode
         if not self.training_mode:
             pygame.init()
             pygame.display.set_caption("Snake")
@@ -22,15 +23,19 @@ class Snake:
             self.rect_size = 60
         random.seed(seed)
         self.size = size
-        self.barrier = list()
+        if self.barrier_mode:
+            self.barrier = list()
         self.snake = None
         self.food = None
         self.score = None
         self.score_text = None
-    def reset(self):
+    def reset(self, seed=None):
+        if seed:
+            random.seed(seed)
         self.snake = [(self.size//2, self.size//2+i) for i in range(3)]
         self.space = set([(i,j) for i in range(self.size) for j in range(self.size) if (i,j) not in self.snake])
-        self.barrier = self.renew_barrier()
+        if self.barrier_mode:
+            self.barrier = self.renew_barrier()
         self.direction = 'up'
         self.food = self.make_food()
         self.score = 0
@@ -84,13 +89,14 @@ class Snake:
         eat_food = None
         snake_len = None
         done = None
-        if a<0 or a>=self.size or b<0 or b>=self.size or (a,b) in self.snake or (a,b) in self.barrier:
+        if a<0 or a>=self.size or b<0 or b>=self.size or (a,b) in self.snake or (self.barrier_mode and (a,b) in self.barrier):
             done = True
         else:
             if (a,b)==self.food:
                 self.snake.insert(0, (a,b))
                 self.space.remove((a,b))
-                self.barrier = self.renew_barrier()
+                if self.barrier_mode:
+                    self.barrier = self.renew_barrier()
                 self.food = self.make_food()
                 self.score += 1+len(self.snake)
                 eat_food = True
@@ -125,8 +131,9 @@ class Snake:
         pygame.draw.rect(self.screen, (255, 15, 15), self.pos_to_rect_pos(self.food), 0, 10)
             
         #draw barrier
-        for index, pos in enumerate(self.barrier):
-            pygame.draw.rect(self.screen, (255,255,255), self.pos_to_rect_pos(pos), 5, 10)
+        if self.barrier_mode:
+            for index, pos in enumerate(self.barrier):
+                pygame.draw.rect(self.screen, (255,255,255), self.pos_to_rect_pos(pos), 5, 10)
             
         #draw score
         self.score_text = self.font.render(f'Score: {self.score}', True, (255, 255, 255))
@@ -168,6 +175,6 @@ class Snake:
                 
             
 if __name__ == '__main__':
-    game = Snake()
+    game = Snake(barrier_mode=False)
     game.run()
     
