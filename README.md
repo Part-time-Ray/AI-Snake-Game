@@ -4,9 +4,9 @@
 
 Using the **PPO** algorithm combined with the **CNN** architecture, we achieve AI agent control of the Snake game.
 
-The basic structure of the game is located in `game.py`, and `wapper.py` is used to package the environment for model operation.
-The code for training and testing the model is located in `train.py` and `test.py`.
-The final trained model is in the `model/` folder, while models during training are in the `cnn_log/log/` folder.
+The basic structure of the game is located in `game.py`, and `wapper.py` is used to package the environment for model operation.\
+The code for training and testing the model is located in `train.py` and `test.py`.\
+The final trained model is in the `model/` folder, while models during training are in the `cnn_log/log/` folder.\
 `cnn_log/logs/PPO_0/` contains tensorboard logs of the training process.
 
 ### Results
@@ -27,6 +27,7 @@ On a $12×12$ board:
 │ test.py
 │ train.py
 │ wrapper.py
+│ snake.yml
 │
 ```
 
@@ -45,13 +46,12 @@ conda install tensorflow
 pip install pygame==2.5.2 gym==0.26.2 gymnasium==0.29.1 stable-baselines3==2.3.2 tensorboard==2.9.1
 ```
 
-or use the packaged environment `snake.yaml`
-
+or use the packaged environment `snake.yml`
 ```bash!
-conda env create --file snake.yaml --name Snake
+conda env create --file snake.yml --name Snake
 ```
 
 ### Acknowledgements
-Inspired by this [Video](https://www.youtube.com/watch?v=jTVMxJBtmFs).
+Inspired by this [Video](https://www.youtube.com/watch?v=jTVMxJBtmFs).\
 Thanks for the explanation and analysis of many knowledge points.
 
