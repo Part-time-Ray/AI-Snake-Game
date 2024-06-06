@@ -1,12 +1,5 @@
 import pygame, sys
-import numpy as np
-import os
 import random
-
-
-# os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
-import pygame
-import sys
 import time
 class Snake:
     def __init__(self, seed=0, size=12, screen_width=760, screen_height=820, margin=20, training_mode=False, barrier_mode=True):
@@ -87,7 +80,6 @@ class Snake:
             case 'down':
                 b+=1
         eat_food = None
-        snake_len = None
         done = None
         if a<0 or a>=self.size or b<0 or b>=self.size or (a,b) in self.snake or (self.barrier_mode and (a,b) in self.barrier):
             done = True
@@ -147,7 +139,7 @@ class Snake:
         self.reset()
         action = 0
         start_time = time.time()
-        update_interval = 0.1
+        update_interval = 0.08
         done = False
         while True:
             for event in pygame.event.get():
@@ -175,6 +167,8 @@ class Snake:
                 
             
 if __name__ == '__main__':
+    import os
+    os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
     game = Snake(barrier_mode=False)
     game.run()
     

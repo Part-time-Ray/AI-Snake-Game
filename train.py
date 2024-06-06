@@ -1,17 +1,9 @@
 import os
 import random
-import math
-import gymnasium as gym  # Import gymnasium instead of gym
-import numpy as np
 from stable_baselines3 import PPO
-from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.vec_env import DummyVecEnv
-from stable_baselines3.common.vec_env import SubprocVecEnv
 from stable_baselines3.common.callbacks import CheckpointCallback
-from sb3_contrib.common.wrappers.action_masker import ActionMasker
-from sb3_contrib import MaskablePPO
 from wrapper import environment
-
 if __name__ == '__main__':
     def make_env(seed):
         def f():
